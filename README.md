@@ -26,3 +26,8 @@ dependencies {
     - spring-boot-starter-thymeleaf
 
 ---
+
+### welcome 페이지
+`resources/static/index.html` : 강의 실습 코드들 실행 결과 `view`를 한 페이지에 모아둠
+
+---
