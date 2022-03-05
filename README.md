@@ -127,8 +127,40 @@ dependencies {
 - `th:with`를 사용하면 그 태그 영역에서 지역변수를 선언해서 사용할 수 있음.
 - 단, 지역변수는 선언된 태그 안에서만 사용 가능
 
-
-
 ---
 
+## 타임리프에서 기본적으로 제공하는 객체들
 
+### 기본 객체
+```html
+<h1>식 기본 객체 (Expression Basic Objects)</h1>
+<ul>
+    <li>request = <span th:text="${#request}"></span></li>
+    <li>response = <span th:text="${#response}"></span></li>
+    <li>session = <span th:text="${#session}"></span></li>
+    <li>servletContext = <span th:text="${#servletContext}"></span></li>
+    <li>locale = <span th:text="${#locale}"></span></li>
+```
+- 요청 : `${#request}` (`HttpServletRequest` 객체가 그대로 제공)
+- 응답 : `${#response}` (`HttpServletResponse` 객체가 그대로 제공)
+- 세션 : `${#session}` (`HttpSession` 객체가 그대로 제공)
+- ServletContext : `${#servletContext}`
+- 지역 : `${#locale}`
+
+### 편의 객체
+```html
+<h1>편의 객체</h1>
+<ul>
+    <li>Request Parameter = <span th:text="${param.paramData}"></span></li>
+    <li>session = <span th:text="${session.sessionData}"></span></li>
+    <li>spring bean = <span th:text="${@helloBean.hello('Spring!')}"></span></li>
+</ul>
+```
+- 요청 파라미터 접근
+  - 예) 파라미터가 param이고 값이 paramData일때 : `${param.paramData}`
+- Http 세션 접근
+  - 예) session에 sessionData로 맵핑한 값이 있을 때 : `${session.sessionData}`
+- 스프링 빈 접근
+  - 예) 빈으로 helloBean으로 등록한 빈이 있을 때 : `${@helloBean.hello('spring!')}`
+
+---
