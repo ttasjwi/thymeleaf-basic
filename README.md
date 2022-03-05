@@ -164,3 +164,48 @@ dependencies {
   - 예) 빈으로 helloBean으로 등록한 빈이 있을 때 : `${@helloBean.hello('spring!')}`
 
 ---
+
+## 유틸리티 객체와 날짜
+
+### 타임리프 유틸리티 객체들
+- `#message` : 메시지, 국제화 처리
+- `#uris` : URI escape 지원
+- `#dates` : `java.util.Date`(Deprecated) 서식 지원
+- `#calendars` : `java.util.Calendar` 서식 지원
+- `#temporals` : `java.time.*` 서식 지원
+- `#numbers` : 숫자 서식 지원
+- `#strings` : 문자 관련 편의 기능
+- `#objects` : 객체 관련 기능
+- `#bools` : boolean 관련 기능
+- `#arrays` : 배열 관련 기능
+- `#lists`, `#sets`, `#maps` : 컬렉션 관련 기능
+- `#ids` :  아이디 처리 관련 기능
+
+### 날짜, 시간
+```html
+<h1>LocalDateTime</h1>
+<ul>
+    <li>${localDateTime} (디폴트) = <span th:text="${localDateTime}"></span></li>
+    <li>${#temporals.format(localDateTime,'yyyy-MM-dd HH:mm:ss')} = <span th:text="${#temporals.format(localDateTime,'yyyy-MM-dd HH:mm:ss')}"></span></li>
+</ul>
+<h1>LocalDateTime - Utils</h1>
+<ul>
+    <li>${#temporals.day(localDateTime)} = <span th:text="${#temporals.day(localDateTime)}"></span></li>
+    <li>${#temporals.month(localDateTime)} = <span th:text="${#temporals.month(localDateTime)}"></span></li>
+    <li>${#temporals.monthName(localDateTime)} = <span th:text="${#temporals.monthName(localDateTime)}"></span></li>
+    <li>${#temporals.monthNameShort(localDateTime)} = <span th:text="${#temporals.monthNameShort(localDateTime)}"></span></li>
+    <li>${#temporals.year(localDateTime)} = <span th:text="${#temporals.year(localDateTime)}"></span></li>
+    <li>${#temporals.dayOfWeek(localDateTime)} = <span th:text="${#temporals.dayOfWeek(localDateTime)}"></span></li>
+    <li>${#temporals.dayOfWeekName(localDateTime)} = <span th:text="${#temporals.dayOfWeekName(localDateTime)}"></span></li>
+    <li>${#temporals.dayOfWeekNameShort(localDateTime)} = <span th:text="${#temporals.dayOfWeekNameShort(localDateTime)}"></span></li>
+    <li>${#temporals.hour(localDateTime)} = <span th:text="${#temporals.hour(localDateTime)}"></span></li>
+    <li>${#temporals.minute(localDateTime)} = <span th:text="${#temporals.minute(localDateTime)}"></span></li>
+    <li>${#temporals.second(localDateTime)} = <span th:text="${#temporals.second(localDateTime)}"></span></li>
+    <li>${#temporals.nanosecond(localDateTime)} = <span th:text="${#temporals.nanosecond(localDateTime)}"></span></li>
+</ul>
+```
+- `#temporals` : java8 이후 추가된 `LocalDate`, `localTime`, `LocalDateTime`, `Instant` 지원
+  - 추가 라이브러리 `thymeleaf-extras-java8time`이 필요한데, 스프링 부트가 알아서 자동으로 추가, 통합해줌
+
+---
+
