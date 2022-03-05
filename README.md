@@ -75,3 +75,60 @@ dependencies {
 - 현재 태그 안의 내용에 대하여 타임리프 문법을 적용하지 말라는 옵션
 
 ---
+
+## 변수 - SpringEL 표현식
+
+- 변수 표현식 :`${...}`
+
+### 객체의 프로퍼티 접근
+```html
+<h1>SpringEL 표현식</h1>
+<ul>Object
+    <li>${user.username} = <span th:text="${user.username}"></span></li>
+    <li>${user['username']} = <span th:text="${user['username']}"></span></li>
+    <li>${user.getUsername()} = <span th:text="${user.getUsername()}"></span></li>
+</ul>
+<ul>List
+    <li>${users[0].username} = <span th:text="${users[0].username}"></span></li>
+    <li>${users[0]['username']} = <span th:text="${users[0]['username']}"></span></li>
+    <li>${users[0].getUsername()} = <span th:text="${users[0].getUsername()}"></span></li>
+</ul>
+<ul>Map
+    <li>${userMap['userA'].username} = <span th:text="${userMap['userA'].username}"></span></li>
+    <li>${userMap['userA']['username']} = <span th:text="${userMap['userA']['username']}"></span></li>
+    <li>${userMap['userA'].getUsername()} = <span th:text="${userMap['userA'].getUsername()}"></span></li>
+</ul>
+```
+1. 객체 
+   - `user` : user 객체
+   - `user.username` : user의 username 속성에 접근 (`getUsername()` 사용)
+   - `user['username']` : 위와 같은 표현식
+   - `user.getUsername()` : user의 `getUsername()` 메서드를 직접 호출
+
+2. List
+   - `users[0]` : 리스트의 0번 인덱스에 위치한 객체
+   - `users[0].username` : 리스트의 0번 인덱스에 위치한 객체의 username 프로퍼티 접근 (`users[0].getUsername()` 사용)
+   - `users[0]['username']` : 위와 같음
+   - `users[0].getUsername()` : 리스트에서 첫번째 값을 찾고 메서드 직접 호출
+   
+3. Map
+   - `userMap['userA']` : 맵의 'userA' 키에 맵핑된 객체
+   - `userMap['userA'].username` : 맵의 'userA' 키에  맵핑된 객체의 username 프로퍼티 접근 (`userMap['userA'].getUsername()` 사용)
+   - `userMAp['userA']['username']` : 위와 같음
+   - `userMap['userA'].getUsername()` : 맵의 'userA' 키에  맵핑된 객체를 찾고 메서드 직접 호출
+
+### 지역변수 선언
+```html
+<h1> 지역변수 - (th:with) </h1>
+<div th:with="first=${users[0]}">
+    <p>처음 사람의 이름은 <span th:text="${first.username}"></span></p>
+</div>
+```
+- `th:with`를 사용하면 그 태그 영역에서 지역변수를 선언해서 사용할 수 있음.
+- 단, 지역변수는 선언된 태그 안에서만 사용 가능
+
+
+
+---
+
+
