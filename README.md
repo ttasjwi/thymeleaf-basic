@@ -209,3 +209,40 @@ dependencies {
 
 ---
 
+## URL
+
+- 문법 : `@{...}`
+- a 태그에서 : `<a th:href="@{...}"></a>`
+
+### URL 변수 맵핑
+1. 단순 URL
+   - `@{/hello}` -> `/hello`
+
+2. 변수 맵핑
+   - URL 표현식 안에서 변수를 사용할 경우 앞에서 `{...}`을 통해 경로 변수를 선언
+   - 뒤의 ()에서 변수에 맵핑될 값을 선언한다.
+   - 앞에서 선언되지 않은 변수를 () 안에서 선언할 경우 쿼리 파라미터로 맵핑된다.
+
+### URL 변수 맵핑 - 예시
+```html
+<li><a th:href="@{/hello}">basic url</a></li>
+```
+- 변수가 선언되지 않았으므로 단순 URL이 렌더링된다.
+```html
+<li><a th:href="@{/hello(param1=${param1}, param2=${param2})}">hello query param!</a></li>
+```
+- () 앞에서 param1, param2가 선언된 바 없다.
+- param1, param2는 앞에서 선언되지 않았으므로 쿼리 파라미터로 맵핑된다.
+```html
+<li><a th:href="@{/hello/{param1}/{param2}(param1=${param1},param2=${param2})}">path variable</a></li>
+```
+- () 앞에서 param1, param2가 선언되었다.
+- param1, param2는 경로변수로 선언되었으므로 그대로 맵핑된다.
+```html
+<li><a th:href="@{/hello/{param1}(param1=${param1}, param2=${param2})}">path variable + query parameter</a></li>
+```
+- () 앞에 param1만 선언되고 param2는 선언되지 않았다.
+- param1은 앞에서 경로변수로 선언됐으므로 그대로 맵핑된다.
+- param2는 앞에서 경로변수로 선언되지 않았으므로 쿼리파라미터로 취급된다.
+
+---
