@@ -318,3 +318,37 @@ dependencies {
    - 값이 존재하면 값을 출력하고, 존재하지 않을 경우 `_`에 의해, 타임리프 연산이 무시되어 태그로 감싸진 본문의 내용이 그대로 출력됨.
 
 ---
+
+## 속성 값 설정
+
+### 속성 덮어쓰기
+```html
+<input type="text" name="mock" th:name="userA" />
+```
+- `th:*`으로, 같은 속성이 있을 경우 덮어씀.
+  - 예) 위의 경우, name 속성으로 "mock"이 지정되어있는데 `th:name`을 통해 덮어씀
+
+### 속성값 추가
+```html
+- th:attrappend = <input type="text" class="text" th:attrappend="class=' large'"/><br />
+- th:attrprepend = <input type="text" class="text" th:attrprepend="class='large '"/><br />
+- th:classappend = <input type="text" class="text" th:classappend="large" /><br />
+```
+- `th:attrappend` : 속성값 뒤에 덧붙임
+- `th:attrprepend` : 속성값 앞에 덧붙임
+- `th:classappend` : class 속성에 자연스럽게 추가함
+  - `attrappend`, `attrprepend` 을 통해 추가시 띄어쓰기를 추가적으로 처리해야하는 번거로움이 있는데, `classappend`를 통해 자연스럽게 추가가 가능하다.
+
+### checkbox 처리
+```html
+- th:checked="true" <input type="checkbox" name="active" th:checked="true" /><br />
+- th:checked="false" <input type="checkbox" name="active" th:checked="false" /><br />
+- checked="true" <input type="checkbox" name="active" checked="true" /><br />
+- checked="false" <input type="checkbox" name="active" checked="false" /><br />
+- checked="checked" <input type="checkbox" name="active" checked="checked" /><br />
+- checked="unchecked" <input type="checkbox" name="active" checked="uncheced" /><br />
+```
+- checkbox는 checked 속성에 어떤 값을 지정하든 항상 체크되는 불편함이 존재
+- `th:checked`를 지정시, true일 경우 checked 속성을 추가하고, false일 때 속성을 추가하지 않는 식으로 처리하기 떄문에 true, false값이 넘어왔을 때 자연스럽게 처리 가능하다.
+
+---
