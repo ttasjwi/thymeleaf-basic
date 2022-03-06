@@ -398,3 +398,30 @@ dependencies {
   - `current` : 현재 객체 반환
 
 ---
+
+## 조건부 출력
+
+### if/unless
+```html
+        <td>
+            <span th:text="${user.age}">0</span>
+            <span th:text="'미성년자'" th:if="${user.age lt 20}">0</span>
+            <span th:text="'미성년자'" th:unless="${user.age ge 20}">0</span>
+        </td>
+```
+- `th:if="조건` : 조건이 참일 경우 태그의 내용을 렌더링
+- `th:unless="조건"` : 조건이 거짓일 경우 태그의 내용을 렌더링하지 않음. 태그 자체가 소멸함
+
+### switch-case
+```html
+        <td th:switch="${user.age}">
+            <span th:case="10">10살</span>
+            <span th:case="20">20살</span>
+            <span th:case="*">기타</span>
+        </td>
+```
+- `th:switch="대상"` : 조건 판단의 대상
+- `th:case="값"` : 조건값
+  - `th:case="*"` : default(만족하는 값이 없을 때 사용하는 디폴트)
+
+---
