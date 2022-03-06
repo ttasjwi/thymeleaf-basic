@@ -246,3 +246,39 @@ dependencies {
 - param2는 앞에서 경로변수로 선언되지 않았으므로 쿼리파라미터로 취급된다.
 
 ---
+
+## 리터럴
+
+- 소스 코드 상에서 고정된 값
+- 문자 : 'hello', ...
+- 숫자 : 10, ...
+- bool : true, false, ...
+- null : null
+
+### 문자 리터럴 취급
+```html
+<h1>리터럴</h1>
+<ul>
+    <!-- 주의! 띄어쓰기로 된 리터럴을 아래 주석과 같이 그대로 "" 사이에 풀어쓰면 예외가 발생함 !-->
+    <!--    <li>"hello world!" = <span th:text="hello world!"></span></li>-->
+
+    <li>'hello' + 'world!' = <span th:text="'hello' + ' world!'"></span></li>
+    <li>'hello world!' = <span th:text="'hello world!'"></span></li>
+    <li>'hello ' + ${data} = <span th:text="'hello' + ${data}"></span></li>
+    <li>리터럴 대체 |hello ${data}| = <span th:text="|hello ${data}|"></span></li>
+</ul>
+```
+1. 원칙적으로 문자 리터럴은 작은 따옴표(`'`)으로 감싸야하며, 결합은 + 을 통해 결합해야한다.
+   - 예) th:text="'hello'"
+
+2. 공백 없이 쭉 이어질 경우 작은 따옴표(`'`)를 생략할 수 있다.
+   - 허용 : `A-Z`, `a-z`, `0-9`, `[]`, `.` `-`, `_`
+     - 예) th:text="hello"
+   - 예외 : 공백이 있는 상태로 풀어 사용할 경우 예외가 발생한다!!!
+     - 예) th:text="hello world!"
+
+3. 리터럴 대체 : 바(`|`)로 감싸면 리터럴로 대체된다.
+   - 예) th:text="|hello world!|"
+   - 예) th:text="|hello ${world}|"
+
+---
