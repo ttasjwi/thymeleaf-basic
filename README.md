@@ -352,3 +352,49 @@ dependencies {
 - `th:checked`를 지정시, true일 경우 checked 속성을 추가하고, false일 때 속성을 추가하지 않는 식으로 처리하기 떄문에 true, false값이 넘어왔을 때 자연스럽게 처리 가능하다.
 
 ---
+
+## 반복
+- 기본적으로 `th:each`를 사용
+- 추가적으로 반복자의 상태를 알 수 있는 기능도 지원됨
+
+### th:each
+```html
+    <tr th:each="user : ${users}">
+        <td th:text="${user.username}">username</td>
+        <td th:text="${user.age}">0</td>
+    </tr>
+```
+- `th:each="요소 : ${반복대상}"`
+- List뿐 아니라, 배열, `java.util.Iterable`, `java.util.Enumeration` 인터페이스를 구현한 모든 객체에 대해 적용 가능함.
+  - Map도 사용가능하기 한데, 이 경우 요소에 담기는 값은 `Map.Entry`가 된다.
+
+### 반복 상태
+```html
+    <tr th:each="user, userStat : ${users}">
+        <td th:text="${userStat.count}">count</td>
+        <td th:text="${user.username}">username</td>
+        <td th:text="${user.age}">age</td>
+        <td>
+            index = <span th:text="${userStat.index}"></span>
+            count = <span th:text="${userStat.count}"></span>
+            size = <span th:text="${userStat.size}"></span>
+            even = <span th:text="${userStat.even}"></span>
+            odd = <span th:text="${userStat.odd}"></span>
+            first? = <span th:text="${userStat.first}"></span>
+            last? = <span th:text="${userStat.last}"></span>
+            current = <span th:text="${userStat.current}"></span>
+        </td>
+    </tr>
+```
+- `th:each="user, userStat : ${users}"`
+  - 두번째 변수로 지정한 변수는 반복 상태를 담는 객체의 변수가 됨.
+  - 두번째 변수를 생략가능한데 이 경우에는 변수명(`user`)+`Stat`이 됨.
+- 메서드
+  - `index` : 0부터 시작했을 때 현재 순서(java에서의 인덱스)
+  - `count` : 1부터 시작했을 때 현재 순서(index + 1)
+  - `size` : 전체 size(요소의 수)
+  - `even`, `odd` : 짝수인지 홀수인지 여부(boolean)
+  - `first`, `last` : 첫번째 요소인지 마지막 요소인지 여부(boolean)
+  - `current` : 현재 객체 반환
+
+---
