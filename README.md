@@ -566,3 +566,41 @@ dependencies {
 - 자바스크립트 내부적으로 `th:each`를 사용할 수 있음.
 
 ---
+
+## 템플릿 fragment
+
+`templates/teamplate/footer.html`
+```html
+<footer th:fragment="copy">
+    푸터 자리 입니다.
+</footer>
+
+<footer th:fragment="copyParam (param1, param2)">
+    <p>파라미터 자리 입니다.</p>
+    <p th:text="${param1}"></p>
+    <p th:text="${param2}"></p>
+</footer>
+```
+- `th:fragment="프래그먼트명 (파라미터1, 파라미터2, ...)"`으로 선언
+- 반복적으로 여러 곳에서 중복적으로 사용되는 HTML 태그를 fragment로 지정하여, 여러곳에서 호출하여 사용할 수 있게 함.
+- 관련있는 fragment를 같은 html 파일에 메서드처럼 모아두고 호출하여 사용
+
+```html
+<h1>부분 포함</h1>
+<h2>부분 포함 insert</h2>
+<div th:insert="~{template/fragment/footer :: copy}"></div>
+
+<h2>부분 포함 replace</h2>
+<div th:replace="~{template/fragment/footer :: copy}"></div>
+
+<h2>부분 포함 단순 표현식</h2>
+<div th:replace="template/fragment/footer :: copy"></div>
+
+<h1>파라미터 사용</h1>
+<div th:replace="~{template/fragment/footer :: copyParam ('데이터1', '데이터2')}"></div>
+```
+- `th:...="~{source path :: fragment명 (인자1, 인자2, ...) }"`으로 호출
+- `th:insert` : 선언된 태그(주로 div)를 상위 태그로 하여, 하위에서 fragment를 호출함
+- `th:replace` : 선언된 태그(주로 div)를 대체하여 fragment를 호출함. (기존 태그는 소멸함)
+
+---
