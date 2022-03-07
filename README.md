@@ -604,3 +604,48 @@ dependencies {
 - `th:replace` : 선언된 태그(주로 div)를 대체하여 fragment를 호출함. (기존 태그는 소멸함)
 
 ---
+
+## 템플릿 레이아웃
+- `layout`을 정의해두고, 각각의 html의 개별적인 코드조각들만 `layout`에 넘겨서 사용하는 방법
+- 각각의 페이지별로 공통되는 부분은 layout에서 관리하고, 다른 부분만 넘겨서 처리함으로서 유지보수가 더 편해짐
+
+```html
+<!DOCTYPE html>
+<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:replace="${title}">레이아웃 타이틀</title>
+</head>
+<body>
+<h1>레이아웃 H1</h1>
+<div th:replace="${content}">
+    <p>레이아웃 컨텐츠</p>
+</div>
+<footer>
+    레이아웃 푸터
+</footer>
+</body>
+</html>
+```
+- 레이아웃 파일에서 header 라든지 html 규모의 태그 단위로 fragment를 정의
+```html
+<!DOCTYPE html>
+<html th:replace="template/layoutExtend/layoutFile :: layout(~{::title}, ~{::section})"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>메인 페이지 타이틀</title>
+</head>
+<body>
+<section>
+    <p>메인 페이지 컨텐츠</p>
+    <p>메인 페이지 포함 내용</p>
+</section>
+</body>
+</html>
+```
+- `th:replace` : 대체
+- 레이아웃을 사용하는 쪽에서는 fragment 호출 인자로 필요한 태그들을 지정하여 넘김
+  - `~{::태그명}` : 태그명에 해당하는 것들을 싹 넘김
+- 사용측의 html 영역이 레이아웃으로 싹 대체되고, 일부 지정해준 인자부분만 레이아웃측에 넘겨서, 대체 변경
+
+---
