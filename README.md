@@ -499,3 +499,70 @@ dependencies {
 - 사용은 가급적 안 하는게 좋고, 정말 사용하기 애매한 경우에 생각해볼만한 태그
 
 ---
+
+## 자바스크립트 인라인 (자바스크립트 지원)
+
+- 자바스크립트에서도 타임리프를 편하게 사용하고 싶을 때가 있음.
+- 이를 위해 타임리프가 지원하는 문법이 `th:inline="javascript`다.
+
+### javascript inline 선언
+```html
+<script th:inline="javascript"></script>
+```
+
+### 텍스트 렌더링 지원
+```javascript
+    var username = [[${user.username}]];
+    var age = [[${user.age}]];
+```
+```javascript
+// 렌더링 - 인라인 적용 전
+    var username = userA;
+    var age = 10;
+// 렌더링 - 인라인 적용 후
+    var username = "userA";
+    var age = 10;
+```
+- 타입에 맞게, 적절하게 렌더링됨.
+- 이스케이프 문자가 섞여있을 경우 자바스크립트에 맞게 이스케이프 처리도 해줌
+
+### 자바스크립트 내츄럴 템플릿
+```javascript
+    var username2 = /*[[${user.username}]]*/ "test username";
+```
+```javascript
+// 렌더링 - 인라인 사용 전
+    var username2 = /*userA*/ "test username";
+// 렌더링 - 인라인 사용 후
+    var username2 = "userA";
+```
+- 주석을 이용하여, 내츄럴 템플릿(순수 자바스크립트를 그대로 유지하면서, 뷰 템플릿을 사용) 기능을 제공함.
+- 렌더링 결과, 주석 안의 결과로 치환되고 뒤의 내용은 지워진다.
+
+### 객체 - JSON
+```javascript
+    var user = [[${user}]];
+```
+```javascript
+// 렌더링 - 인라인 사용 전
+    var user = BasicController.User(username=userA, age=10);
+// 렌더링 - 인라인 사용 후
+    var user = {"username":"userA","age":10};
+```
+- 인라인 사용 전에는, 객체의 `toString()`이 호출된 값
+- 인라인 사용 후에는, JSON으로 변환해줌.
+
+### 자바스크립트 인라인 each
+```javascript
+    [# th:each="user, stat : ${users}"]
+    var user[[${stat.count}]] = [[${user}]];
+    [/]
+```
+```javascript
+    var user1 = {"username":"userA","age":10};
+    var user2 = {"username":"userB","age":20};
+    var user3 = {"username":"userC","age":30};
+```
+- 자바스크립트 내부적으로 `th:each`를 사용할 수 있음.
+
+---
