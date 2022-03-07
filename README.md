@@ -477,3 +477,25 @@ dependencies {
    - 클라이언트 측에서는 원래 주석이였다는 사실을 모른다.
 
 ---
+
+## th:block 태그
+```html
+<th:block th:each="user : ${users}">
+    <div>
+        사용자 이름1 <span th:text="${user.username}"></span>
+        사용자 나이1 <span th:text="${user.age}"></span>
+    </div>
+    <div>
+        요약 <span th:text="${user.username} + ' / ' + ${user.age}"></span>
+    </div>
+</th:block>
+```
+- 타임리프 문법은 일반적으로 HTML 태그의 속성에 삽입하여 사용한다.
+- 하지만 여러 태그에 걸쳐서 타임리프 문법을 적용하고 싶은 애매한 상황이 있음.
+  - 방법 1 : 상위 div에 th 태그를 걸고, 하위 태그들를 묶어서 사용하는 방법
+    - 렌더링 결과 상위 `div` 태그가 남음
+  - **방법 2 : 상위 th:block 으로 묶어서 사용한는 방법 (타임리프에서 제공하는 독자적 태그)**
+    - 렌더링 결과 `th:block` 태그가 소멸함
+- 사용은 가급적 안 하는게 좋고, 정말 사용하기 애매한 경우에 생각해볼만한 태그
+
+---
